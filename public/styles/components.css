@@ -1,0 +1,117 @@
+input,
+button,
+select,
+option {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+input[type="submit"],
+button[type="submit"] {
+    cursor: pointer;
+}
+
+.button-primary {
+    display: inline-block;
+    background-color: var(--primary-100);
+    color: var(--primary-600);
+    border-radius: 4px;
+    padding: 8px;
+}
+
+label {
+    color: var(--neutral-200);
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin-top: 20px;
+}
+
+.input-text {
+    border: 1px solid var(--neutral-600);
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+.input-text:focus {
+    border: 1px solid var(--neutral-300);
+    color: var(--neutral-100);
+}
+
+.input-text:disabled {
+    border: none;
+}
+
+.input-submit {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px 20px;
+    color: var(--neutral-900);
+    border-radius: 4px;
+    width: 100%;
+    background-color: var(--primary-600);
+    font-size: 14px;
+    font-weight: 600;
+    width: max-content;
+}
+
+.input-delete {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px 20px;
+    color: var(--neutral-900);
+    border-radius: 4px;
+    width: 100%;
+    background-color: var(--error-600);
+    font-size: 14px;
+    font-weight: 600;
+    width: max-content;
+}
+
+/* IN ROW */
+.inputSubmit,
+.btnCancel{
+    display: none;
+}
+
+.card {
+    background-color: var(--primary-400);
+    color: var(--neutral-900);
+    padding: 14px;
+    border-radius: 8px;
+    min-width: 100px;
+    width: 100%;
+    height: max-content;
+    transition: ease .3s;
+}
+
+.card:hover {
+    filter: brightness(1.2);
+    transform: scale(1.02);
+}
+
+@media screen and (min-width:0px) and (max-width: 500px) {
+    .navbar .input-text {
+        color: var(--neutral-900);
+        border: 1px solid var(--neutral-900);
+    }
+
+    .navbar .input-text::placeholder {
+        color: var(--neutral-900);
+    }
+
+    .input {
+        width: 100%;
+    }
+
+    .input-submit {
+        display: block;
+        width: 100%;
+    }
+}

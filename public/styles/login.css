@@ -1,0 +1,110 @@
+.login-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    /* background-color: var(--neutral-900); */
+    background: linear-gradient(to top right, var(--primary-600), var(--primary-300));
+    gap: 20px;
+    padding: 20px 40px;
+}
+
+.form-box {
+    width: 50%;
+    height: 90vh;
+    background-color: var(--neutral-900);
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px hsla(0, 0%, 0%, 0.2);
+    padding: 40px;
+    animation: totop .8s;
+}
+
+.input-login {
+    margin-bottom: 14px;
+}
+
+.input-login label {
+    display: block;
+    width: 100%;
+}
+
+.input-login input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--neutral-700);
+    border-radius: 10px;
+}
+
+.login {
+    display: block;
+    width: 100%;
+    background-color: var(--primary-600);
+    font-size: 1.1rem;
+    padding: 8px;
+    border-radius: 10px;
+    color: var(--neutral-900);
+    font-weight: 600;
+}
+
+.login-banner {
+    position: relative;
+    height: 90vh;
+    width: 100%;
+    color: var(--neutral-900);
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    animation: totop .75s;
+}
+
+.media-link {
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: var(--neutral-900);
+    font-size: 0.8rem;
+}
+
+.media-link a {
+    color: var(--neutral-900);
+}
+
+.form-link {
+    display: none;
+}
+
+@media screen and (min-width:0px) and (max-width: 500px) {
+    .login-box {
+        flex-direction: column;
+        align-items: end;
+        justify-content: end;
+        padding: 0px;
+    }
+
+    .form-box {
+        width: 100%;
+        height: 50%;
+        border-radius: 20px 20px 0px 0px;
+    }
+
+    .login-banner {
+        height: max-content;
+        align-items: end;
+        margin-top: 20%;
+    }
+
+    .login-banner .media-link {
+        display: none;
+    }
+
+    .form-link {
+        display: block;
+        margin-top: 20%;
+        text-align: center;
+        color: var(--primary-400);
+    }
+}
