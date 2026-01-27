@@ -123,8 +123,8 @@
                 <table class="text-center mt-12 text-nowrap">
                     <tr>
                         <th>No</th>
-                        <th>Tarif</th>
                         <th>Jenis Kendaraan</th>
+                        <th>Tarif</th>
                         <th>Aksi</th>
                     </tr>
 
@@ -139,9 +139,8 @@
 
                                 <input type="hidden" name="id_tarif" id="" value="{{ $tarif->id_tarif }}">
                                 <td>{{ $no++ }}</td>
-                                <td>Rp. <input type="number" name="tarif_per_jam" id=""
-                                        value="{{ $tarif->tarif_per_jam }}" class="input-text w-100" disabled></td>
                                 <td>{{ $tarif->jenis_kendaraan }}</td>
+                                <td class="w-max">Rp. <input type="number" name="tarif_per_jam" id="" value="{{ $tarif->tarif_per_jam }}" class="input-text w-max" disabled></td>
                                 <td>
                                     <input type="submit" name="input-submit" id=""
                                         class="inputSubmit btn-primary pl-8 pr-8 pt-4 pb-4 cursor-pointer" value="Update">

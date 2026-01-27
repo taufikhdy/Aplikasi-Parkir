@@ -20,7 +20,7 @@
                 <p class="fs-18">Set your parking system easily</p>
             </div>
             <div class="media-link pl-40">
-                <p><a href=""><i class="ri-instagram-line"></i> Instagram</a> <a href=""><i
+                <p><a href="https://instagram.com/tauwfiik"><i class="ri-instagram-line"></i> Instagram</a> <a href="https://github.com/taufikhdy/taufikhdy"><i
                             class="ri-github-fill"></i> github</a></p>
             </div>
         </div>
@@ -42,8 +42,7 @@
                 <input type="submit" name="" id="" value="Login" class="login mt-20">
 
                 <div class="form-link">
-                    <p><a href=""><i class="ri-instagram-line"></i> Instagram</a> <a href=""><i
-                                class="ri-github-fill"></i> github</a></p>
+                    <p><a href="https://instagram.com/tauwfiik"><i class="ri-instagram-line"></i> Instagram</a> <a href="https://github.com/taufikhdy/taufikhdy"><i class="ri-github-fill"></i> github</a></p>
                 </div>
             </form>
         </div>

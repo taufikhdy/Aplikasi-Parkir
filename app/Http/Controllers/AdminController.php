@@ -50,7 +50,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Mengubah Harga Tarif ' . $tarif->jenis_kendaraan . ' ke Rp. ' . $tarif->tarif_per_jam,
+            'aktifitas' => '✏️ Mengubah Harga Tarif ' . $tarif->jenis_kendaraan . ' ke Rp. ' . $tarif->tarif_per_jam,
             'waktu_aktifitas' => now()
         ]);
 
@@ -86,7 +86,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Menambah Area Parkir : ' . $request->nama_area,
+            'aktifitas' => '🅿️ Menambah Area Parkir : ' . $request->nama_area,
             'waktu_aktifitas' => now()
         ]);
 
@@ -109,7 +109,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Mengubah Area Parkir (id=' . $area->id_area . ') ' . $request->nama_area,
+            'aktifitas' => '✏️ Mengubah Area Parkir (id=' . $area->id_area . ') ' . $request->nama_area,
             'waktu_aktifitas' => now()
         ]);
 
@@ -123,7 +123,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Menghapus Area Parkir : ' . $data->nama_area,
+            'aktifitas' => '🗑️ Menghapus Area Parkir : ' . $data->nama_area,
             'waktu_aktifitas' => now()
         ]);
         return redirect()->route('admin.dashboard');
@@ -156,7 +156,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Menambah User : ' . $request->nama_lengkap,
+            'aktifitas' => '➕ Menambah User : ' . $request->nama_lengkap,
             'waktu_aktifitas' => now()
         ]);
 
@@ -170,7 +170,7 @@ class AdminController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Menghapus User : ' . $data->nama_lengkap,
+            'aktifitas' => '🗑️ Menghapus User : ' . $data->nama_lengkap,
             'waktu_aktifitas' => now()
         ]);
 
@@ -194,7 +194,7 @@ class AdminController extends Controller
 
         $admin = Auth::user();
         $admin->log()->create([
-            'aktifitas' => 'Mengubah Data ' . $user->nama_lengkap . '( ' . $user->username . ' )',
+            'aktifitas' => '✏️ Mengubah Data ' . $user->nama_lengkap . '( ' . $user->username . ' )',
             'waktu_aktifitas' => now()
         ]);
 

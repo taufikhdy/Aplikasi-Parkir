@@ -34,7 +34,7 @@ class AuthController extends Controller
             $user->save();
 
             $user->log()->create([
-                'aktifitas' => 'Login Aplikasi',
+                'aktifitas' => '🔑 Login Aplikasi',
                 'waktu_aktifitas' => now()
             ]);
 
@@ -52,7 +52,7 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Logout Aplikasi',
+            'aktifitas' => '🔐 Logout Aplikasi',
             'waktu_aktifitas' => now()
         ]);
 

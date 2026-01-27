@@ -47,7 +47,7 @@
                     <th>Username</th>
                     <th>Role</th>
                     <th>Status</th>
-                    <th>Log Aktifitas</th>
+                    <th>Log Aktivitas</th>
                     <th>Aksi</th>
                 </tr>
 
@@ -68,7 +68,7 @@
                             <td>Offline</td>
                         @endif
 
-                        <td><a href="{{ route('admin.detail_log', $user->id_user) }}">lihat log aktifitas</a></td>
+                        <td><a href="{{ route('admin.detail_log', $user->id_user) }}">lihat log aktivitas</a></td>
                         <td>
                             <div class="flex flex-center align-center gap-4">
                                 <a href="{{ route('admin.editUser', $user->id_user) }}"

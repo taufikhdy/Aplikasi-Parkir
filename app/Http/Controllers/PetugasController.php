@@ -22,7 +22,7 @@ class PetugasController extends Controller
     public function detail_area($id)
     {
         $area = AreaParkir::findOrFail($id);
-        $kendaraan = Transaksi::where('id_area', $id)->latest()->get();
+        $kendaraan = Transaksi::where('id_area', $id)->where('status', 'masuk')->latest()->get();
         return view('layouts.area', compact('area', 'kendaraan'));
     }
 
@@ -73,7 +73,7 @@ class PetugasController extends Controller
 
         $user = Auth::user();
         $user->log()->create([
-            'aktifitas' => 'Menambah Pelanggan ' . $request->jenis_kendaraan . ' Plat Nomor : ' . $request->plat_nomor,
+            'aktifitas' => '➕ Menambah Pelanggan ' . $request->jenis_kendaraan . ' Plat Nomor : ' . $request->plat_nomor,
             'waktu_aktifitas' => now()
         ]);
 
@@ -83,7 +83,7 @@ class PetugasController extends Controller
 
     public function customerList()
     {
-        $customers = Transaksi::latest()->get();
+        $customers = Transaksi::where('status', 'masuk')->latest()->get();
 
         return view('layouts.customers', compact('customers'));
     }
@@ -127,11 +127,22 @@ class PetugasController extends Controller
             'id_user' => Auth::user()->id_user
         ]);
 
-        $transaksi->kendaraan->delete();
 
         $area = AreaParkir::where('id_area', $transaksi->id_area)->where('terisi', '>', 0)->decrement('terisi');
 
+        $user = Auth::user();
+        $user->log()->create([
+            'aktifitas' => '✅ Mengkonfirmasi Pelanggan ' . $transaksi->kendaraan->pemilik . ' ' . $transaksi->kendaraan->plat_nomor . ' Selesai',
+            'waktu_aktifitas' => now()
+        ]);
 
-        return view('layouts.struk', compact('masuk', 'keluar', 'menit', 'jam', 'biaya'));
+        // Kendaraan::where('id_kendaraan', $transaksi->id_kendaraan)->delete();
+
+        return redirect()->route('petugas.struk', $request->id_parkir);
+    }
+
+    public function struk($id_parkir){
+        $transaksi = Transaksi::findOrFail($id_parkir);
+        return view('layouts.struk', compact('transaksi'));
     }
 }

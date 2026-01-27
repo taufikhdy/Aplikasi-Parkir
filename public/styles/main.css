@@ -1644,10 +1644,12 @@ a {
     padding: 40px 0px;
     min-height: 100vh;
     animation: totop .8s;
+    /* position: relative; */
 }
 
 .content.active {
     display: block;
+    /* position: relative; */
 }
 
 
@@ -1725,6 +1727,18 @@ tr:hover {
         display: inline;
     }
 
+    .navbar {
+        position: sticky;
+        z-index: 98;
+        top: 0px;
+        left: 0px;
+        background-color: var(--primary-700);
+        border-radius: 0px 0px 16px 16px;
+        padding: 10px 20px;
+        color: var(--neutral-900);
+
+    }
+
     .phone-box {
         background-color: var(--neutral-900);
         padding: 30px 20px;
@@ -1738,11 +1752,6 @@ tr:hover {
     .main {
         width: 100%;
         padding: 0px;
-    }
-
-    .navbar {
-        padding: 20px;
-        color: var(--neutral-900);
     }
 
     .banner {
@@ -1774,7 +1783,7 @@ tr:hover {
     }
 
     .phone-box .menu .menu-item {
-        justify-content:stretch;
+        justify-content: stretch;
         align-items: start;
         /* flex-wrap: ; */
         width: 100%;

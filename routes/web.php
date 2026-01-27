@@ -56,11 +56,14 @@ Route::middleware(['auth', 'multirole:petugas'])->group(function () {
         Route::get('/petugas/dashboard/customers/list', 'customerList')->name('petugas.customerList');
         Route::get('/petugas/dashboard/customers/list/selesai/{id}', 'pelangganFormSelesai')->name('petugas.customerSelesai');
         Route::post('/petugas/dashboard/customers/post', 'pelangganSelesaiPost')->name('petugas.pelangganSelesaiPost');
+        Route::get('/petugas/dashboard/customer/struk/{id}', 'struk')->name('petugas.struk');
     });
 });
 
 
 Route::middleware(['auth', 'multirole:owner'])->group(function () {
     Route::controller(OwnerController::class)->group(function () {
+        Route::get('/owner/dashboard', 'dashboard')->name('owner.dashboard');
+        Route::get('/transaksi/data', 'dataTransaksi');
     });
 });

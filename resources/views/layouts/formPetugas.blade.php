@@ -28,7 +28,7 @@
                             placeholder="Pemilik Kendaraan">
                     </div>
                 </div>
-                <div class="flex align-center gap-10">
+                <div class="flex align-top gap-10">
                     <div class="input">
                         <label for="jenis_kendaraan">Jenis Kendaraan</label>
                         <select name="jenis_kendaraan" id="jenis_kendaraan" class="input-text" required>

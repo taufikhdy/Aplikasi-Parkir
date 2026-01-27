@@ -21,7 +21,9 @@
         </div>
     </section>
 
-    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{ asset('chartJS/chart.umd.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

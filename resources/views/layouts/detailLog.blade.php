@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="content active">
-        <h2>Detail Log Aktifitas {{$logs->first()->user->nama_lengkap}} ( {{$logs->first()->user->username}} )</h2>
+        <h2>Detail Log Aktivitas {{$logs->first()->user->nama_lengkap}} ( {{$logs->first()->user->username}} )</h2>
 
         <div class="table-container mt-20">
             <table class="text-center text-nowrap">
@@ -13,8 +13,8 @@
                     <th>No</th>
                     {{-- <th>ID User</th>
                     <th>Role</th> --}}
-                    <th>Aktifitas</th>
-                    <th>Waktu Aktifitas</th>
+                    <th>Aktivitas</th>
+                    <th>Waktu Aktivitas</th>
                 </tr>
 
                 @php

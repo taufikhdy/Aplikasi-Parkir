@@ -17,6 +17,9 @@
                     class="{{ Request::is('petugas/dashboard*') ? 'active' : '' }}"><i class="ri-dashboard-line"></i>
                     Dashboard</a>
             @elseif (Auth::user()->role === 'owner')
+                <a href="{{ route('owner.dashboard') }}"
+                    class="{{ Request::is('owner/dashboard*') ? 'active' : '' }}"><i class="ri-dashboard-line"></i>
+                    Dashboard</a>
             @endif
         </div>
     </div>
