@@ -1468,6 +1468,15 @@ a {
     font-size: 14px;
 }
 
+.btn-success{
+    display: inline-block;
+    color: var(--neutral-900);
+    background-color: var(--success-500);
+    font-weight: 600;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
 .coin {
     background-color: var(--warning-100);
     /* border: 2px solid var(--warning-200); */
@@ -1624,8 +1633,9 @@ a {
 .phone-box .menu .menu-item a {
     line-height: 14px;
     height: 90px;
-    width: 80px;
+    width: 84px;
     align-content: center;
+    justify-content: center;
     padding: 8px;
 }
 
@@ -1734,7 +1744,7 @@ tr:hover {
         left: 0px;
         background-color: var(--primary-700);
         border-radius: 0px 0px 16px 16px;
-        padding: 10px 20px;
+        padding: 14px 20px;
         color: var(--neutral-900);
 
     }

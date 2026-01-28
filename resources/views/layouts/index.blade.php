@@ -42,10 +42,9 @@
                         <br><br>
                         <span class="fs-12">Konfirmasi<br>Pelanggan<br>Selesai</span></a>
                 @elseif (Auth::user()->role === 'owner')
-                    {{-- <a href="{{ route('admin.tarif') }}" class="coin text-center"><i class="ri-lg ri-coins-line"></i>
+                    <a href="{{ route('owner.dataTransaksi') }}" class="vehilce text-center"><i class="ri-lg ri-export-line"></i>
                         <br><br>
-                        <span class="fs-12">Tarif
-                            Parkir</span></a> --}}
+                        <span class="fs-12">Ekspor Data<br>Transaksi</span></a>
                 @endif
             </div>
         </div>
@@ -95,7 +94,7 @@
                 </div>
 
                 <div class="mt-20">
-                    <canvas id="chartTransaksi" style="width: 100%; height: 50vh;"></canvas>
+                    <canvas id="chartTransaksi" style="width: 100%; height: 30vh;"></canvas>
                 </div>
 
                 <h2 class="mt-40">Tabel Transaksi</h2>
@@ -103,7 +102,7 @@
                     <table class="text-center text-nowrap">
                         <tr>
                             <th>No</th>
-                            <th>ID_Parkir</th>
+                            <th>ID Parkir</th>
                             <th>Pelanggan</th>
                             <th>Waktu Masuk</th>
                             <th>Waktu Keluar</th>

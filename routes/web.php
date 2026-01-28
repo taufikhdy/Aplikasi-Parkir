@@ -65,5 +65,9 @@ Route::middleware(['auth', 'multirole:owner'])->group(function () {
     Route::controller(OwnerController::class)->group(function () {
         Route::get('/owner/dashboard', 'dashboard')->name('owner.dashboard');
         Route::get('/transaksi/data', 'dataTransaksi');
+
+        Route::get('/owner/dashboard/data_transaksi', 'data_transaksi')->name('owner.dataTransaksi');
+        Route::post('/owner/dashboard/data_transaksi/PDFXPOR', 'pdfExport')->name('owner.pdfExport');
+        Route::post('/owner/dashboard/data_transaksi/EXCXPOR', 'excelExport')->name('owner.excelExport');
     });
 });
