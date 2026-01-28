@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="banner">
-        <h1>Good Morning</h1>
+        <h1 id="greeting"></h1>
         <br>
         <p><span class="text-bold">{{ Auth::User()->nama_lengkap }} </span><br>
             {{ Auth::User()->role }}

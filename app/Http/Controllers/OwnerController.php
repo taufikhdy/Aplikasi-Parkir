@@ -7,6 +7,7 @@ use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class OwnerController extends Controller
@@ -50,6 +51,12 @@ class OwnerController extends Controller
             'to' => 'required|date'
         ]);
 
+        $user = Auth::user();
+        $user->log()->create([
+            'aktifitas' => '📥 Mendownload Data Transaksi Masuk format EXCEL',
+            'waktu_aktifitas' => now()
+        ]);
+
         return Excel::download(
             new TransaksiExport($request->from, $request->to), 'Laporan Transaksi.xlsx'
         );
@@ -70,6 +77,13 @@ class OwnerController extends Controller
         ])->get();
 
         $total = $transaksis->sum('biaya_total');
+
+
+        $user = Auth::user();
+        $user->log()->create([
+            'aktifitas' => '📥 Mendownload Data Transaksi Masuk format PDF',
+            'waktu_aktifitas' => now()
+        ]);
 
         $pdf = Pdf::loadview('pdf.transaksi', compact('transaksis', 'from', 'to', 'total'))->setPaper('a4', 'landscape');
 

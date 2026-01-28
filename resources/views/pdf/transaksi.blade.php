@@ -80,7 +80,7 @@
         </tr>
     </table>
 
-    <p style="font-size: 10pt; text-align: right;">diunduh pada {{ date('d-m-Y') }}</p>
+    <p style="font-size: 10pt; text-align: right;">diunduh pada {{ date('d-m-Y H:i:s') }}</p>
 </body>
 
 </html>

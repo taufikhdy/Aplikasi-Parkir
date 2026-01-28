@@ -10,6 +10,20 @@ btnClose.addEventListener('click', () => {
     sidebar.classList.remove('responsive');
 });
 
+const greeting = document.getElementById('greeting');
+
+if(greeting){
+const time = new Date().getHours();
+if (time >= 0 && time <= 11){
+    greeting.textContent = 'Selamat Pagi 🌤️';
+}else if(time >= 11 && time <= 15){
+    greeting.textContent = 'Selamat Siang 👋🏻';
+}else if(time >= 15 && time <= 19){
+    greeting.textContent = 'Selamat Sore 🌅';
+}else{
+    greeting.textContent = 'Selamat Malam 🌙';
+}
+}else{
 
 const btnEdit = document.querySelectorAll('.btnEdit');
 
@@ -50,4 +64,4 @@ inputLabel.addEventListener('input', function(e) {
 warnaLabel.addEventListener('input', function(e) {
     bgLabel.style.backgroundColor = e.target.value;
 });
-
+}
