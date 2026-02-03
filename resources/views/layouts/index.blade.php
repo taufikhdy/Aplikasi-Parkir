@@ -6,7 +6,7 @@
     <div class="banner">
         <h1 id="greeting"></h1>
         <br>
-        <p><span class="text-bold">{{ Auth::User()->nama_lengkap }} </span><br>
+        <p><span class="">{{ Auth::User()->nama_lengkap }} </span><br>
             {{ Auth::User()->role }}
         </p>
     </div>
@@ -17,7 +17,6 @@
 
             <div class="menu-item">
                 @if (Auth::user()->role === 'admin')
-
                     <a href="{{ route('admin.tarif') }}" class="coin text-center"><i class="ri-lg ri-coins-line"></i> <br><br>
                         <span class="fs-12">Tarif
                             Parkir</span></a>
@@ -42,7 +41,8 @@
                         <br><br>
                         <span class="fs-12">Konfirmasi<br>Pelanggan<br>Selesai</span></a>
                 @elseif (Auth::user()->role === 'owner')
-                    <a href="{{ route('owner.dataTransaksi') }}" class="vehilce text-center"><i class="ri-lg ri-export-line"></i>
+                    <a href="{{ route('owner.dataTransaksi') }}" class="vehilce text-center"><i
+                            class="ri-lg ri-export-line"></i>
                         <br><br>
                         <span class="fs-12">Ekspor Data<br>Transaksi</span></a>
                 @endif
@@ -51,6 +51,38 @@
 
         <div class="area">
             @if (Auth::user()->role === 'admin')
+
+                <div class="flex flex-between align-center pt-10 pb-10 mt-20">
+                    <h2>Aktivitas Terbaru</h2>
+                    <a href="{{route('admin.aktivitas')}}" class="btn-primary p-6">Lihat Semua</a>
+                </div>
+                <div class="table-container">
+                    <table class="text-center text-nowrap">
+                        <tr>
+                            <th>No</th>
+                            {{-- <th>ID User</th> --}}
+                            <th>User</th>
+                            <th>Aktivitas</th>
+                            <th>Waktu Aktivitas</th>
+                        </tr>
+
+                        @php
+                            $no = 1;
+                        @endphp
+
+                        @foreach ($logs as $log)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                {{-- <td>{{ $log->id_user }}</td> --}}
+                                <td class="text-left"><a
+                                        href="{{ route('admin.detail_log', $log->id_user) }}" class="underline">{{ $log->user->nama_lengkap . ' ( ' . $log->user->role . ' )' }}</a>
+                                </td>
+                                <td class="text-left">{{ $log->aktifitas }}</td>
+                                <td>{{ $log->waktu_aktifitas }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
 
                 <div class="flex flex-between align-center pt-10 pb-10 mt-20">
                     <h2>Area Parkir</h2>
@@ -64,7 +96,11 @@
                             class="card flex flex-column flex-between gap-16" style="background: {{ $area->warna_label }}">
                             {{-- <div class=""> --}}
                             <h3>{{ $area->nama_area }}</h3>
-                            <p class="fs-12">Kapasitas : {{ $area->kapasitas }}</p>
+
+                            <div class="">
+                                <p class="fs-12">Kapasitas : {{ $area->kapasitas }}</p>
+                                <h4 class="mt-4">Terisi {{ $area->terisi . ' / ' . $area->kapasitas }}</h4>
+                            </div>
                             {{-- </div> --}}
                         </a>
                     @endforeach
@@ -79,10 +115,12 @@
 
                     @foreach ($areas as $area)
                         <a href="{{ route('petugas.detail_area', $area->id_area) }}"
-                            class="card flex flex-column flex-between" style="background: {{ $area->warna_label }}">
+                            class="card flex flex-column flex-between gap-16" style="background: {{ $area->warna_label }}">
+                            <h3>{{ $area->nama_area }}</h3>
+
                             <div class="">
-                                <h3>{{ $area->nama_area }}</h3>
-                                <p class="fs-12">Kapasitas : {{ $area->kapasitas }} <br> Terisi : {{ $area->terisi }}</p>
+                                <p class="fs-12">Kapasitas : {{ $area->kapasitas }}</p>
+                                <h4 class="mt-4">Terisi {{ $area->terisi . ' / ' . $area->kapasitas }}</h4>
                             </div>
                         </a>
                     @endforeach
@@ -118,26 +156,26 @@
 
                         @foreach ($transaksis as $i)
                             <tr>
-                                <td>{{$no++}}</td>
-                                <td>{{$i->id_parkir}}</td>
-                                <td>{{$i->kendaraan->pemilik}}</td>
-                                <td>{{$i->waktu_masuk}}</td>
-                                <td>{{$i->waktu_keluar}}</td>
-                                <td>{{$i->durasi_jam}} jam</td>
-                                <td>Rp. {{number_format($i->biaya_total, 0, ',', '.')}}</td>
-                                <td>{{$i->area->nama_area}}</td>
-                                <td>{{$i->user->nama_lengkap}}</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $i->id_parkir }}</td>
+                                <td>{{ $i->kendaraan->pemilik }}</td>
+                                <td>{{ $i->waktu_masuk }}</td>
+                                <td>{{ $i->waktu_keluar }}</td>
+                                <td>{{ $i->durasi_jam }} jam</td>
+                                <td>Rp. {{ number_format($i->biaya_total, 0, ',', '.') }}</td>
+                                <td>{{ $i->area->nama_area }}</td>
+                                <td>{{ $i->user->nama_lengkap }}</td>
                             </tr>
                         @endforeach
                     </table>
                 </div>
 
-                    {{-- AMBIL DATA --}}
-                    @push('scripts')
+                {{-- AMBIL DATA --}}
+                @push('scripts')
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
 
-                            fetch("{{url('/transaksi/data')}}")
+                            fetch("{{ url('/transaksi/data') }}")
                                 .then(response => response.json())
                                 .then(result => {
 
@@ -152,7 +190,7 @@
                                     new Chart(ctx, {
                                         type: 'bar',
                                         data: {
-                                            labels: result.labels, // sementara
+                                            labels: result.labels,
                                             datasets: [{
                                                 label: 'Transaksi Masuk',
                                                 data: result.values,
@@ -170,7 +208,7 @@
 
                                 });
 
-                            });
+                        });
                     </script>
                 @endpush
             @endif

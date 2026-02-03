@@ -77,6 +77,16 @@
     display: none;
 }
 
+.error-message {
+    display: block;
+    width: 100%;
+    color: var(--error-600);
+    background-color: var(--error-100);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: .8rem;
+}
+
 @media screen and (min-width:0px) and (max-width: 500px) {
     .login-box {
         flex-direction: column;

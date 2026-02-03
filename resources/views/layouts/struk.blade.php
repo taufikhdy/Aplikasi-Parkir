@@ -151,17 +151,17 @@
 
                 <tr>
                     <td>To</td>
-                    <td>{{' : ' . \Carbon\Carbon::parse($transaksi->waktu_keluar)->format('H:i:s') }}</td>
+                    <td>{{' : ' . \Carbon\Carbon::parse($transaksi->waktu_keluar)->format('H:i:s') ?? ' - ' }}</td>
                 </tr>
 
                 <tr>
                     <td>Time Total</td>
-                    <td>{{' : ' . $transaksi->durasi_jam }} jam</td>
+                    <td>{{' : ' . $transaksi->durasi_jam ?? ' - '}} jam</td>
                 </tr>
 
                 <tr>
                     <td>Total</td>
-                    <td>{{' : Rp ' . number_format($transaksi->biaya_total, 0, ',', '.') }}</td>
+                    <td>{{' : Rp ' . number_format($transaksi->biaya_total, 0, ',', '.') ?? 0 }}</td>
                 </tr>
             </table>
         </div>

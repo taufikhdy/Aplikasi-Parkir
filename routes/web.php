@@ -35,12 +35,16 @@ Route::middleware(['auth', 'multirole:admin'])->group(function () {
 
 
         Route::get('/admin/users', 'users')->name('admin.users');
+        Route::get('/admin/users/formTambah', 'formUser')->name('admin.formUser');
         Route::post('/admin/users/tambah', 'tambahUser')->name('admin.tambahUser');
         Route::get('/admin/users/formEditUser/{id}', 'formEditUser')->name('admin.editUser');
         Route::put('/admin/users/formEditUser/Edit', 'editUser')->name('admin.editUserPost');
         Route::delete('/admin/users/destroy', 'hapusUser')->name('admin.hapusUser');
 
+        Route::get('/admin/log_aktifitas', 'aktifitas')->name('admin.aktivitas');
         Route::get('/admin/log_aktifitas/detail/{id}', 'detailLog')->name('admin.detail_log');
+        Route::post('/admin/log_aktifitas/hapus', 'hapusLog')->name('admin.hapusLog');
+        Route::post('/admin/log_aktifitas/exportPdf', 'exportLogPdf')->name('admin.exportLog');
     });
 });
 

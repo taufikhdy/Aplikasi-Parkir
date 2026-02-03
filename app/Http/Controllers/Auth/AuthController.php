@@ -45,7 +45,7 @@ class AuthController extends Controller
                 default => redirect()->route('login')
             };
         }
-        return redirect()->route('login')->with('error', 'Login gagal');
+        return redirect()->route('login')->with('error', 'Username atau Password Salah!');
     }
 
     public function logout(Request $request)

@@ -39,6 +39,10 @@
                     <input type="password" name="password" id="password">
                 </div>
 
+                @if (session('error'))
+                    <p class="error-message">{{session('error')}}</p>
+                @endif
+
                 <input type="submit" name="" id="" value="Login" class="login mt-20">
 
                 <div class="form-link">

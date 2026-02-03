@@ -10,7 +10,7 @@
                         class="ri-dashboard-line"></i> Dashboard</a>
                 <a href="{{ route('admin.users') }}" class="{{ Request::is('admin/users') ? 'active' : '' }}"><i
                         class="ri-group-line"></i> Users</a>
-                <a href="" class="{{ Request::is('admin/log*') ? 'active' : '' }}"><i class="ri-flag-2-line"></i>
+                <a href="{{route('admin.aktivitas')}}" class="{{ Request::is('admin/log*') ? 'active' : '' }}"><i class="ri-flag-2-line"></i>
                     Aktivitas</a>
             @elseif (Auth::user()->role === 'petugas')
                 <a href="{{ route('petugas.dashboard') }}"

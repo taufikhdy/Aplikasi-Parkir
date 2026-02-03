@@ -65,6 +65,7 @@ class PetugasController extends Controller
         $tb_transaksi = Transaksi::create([
             'id_kendaraan' => $tb_kendaraan->id_kendaraan,
             'waktu_masuk' => $request->waktu_masuk,
+            'waktu_keluar' => null,
             'id_tarif' => $tarif->id_tarif,
             'status' => 'masuk',
             'id_user' => $tb_kendaraan->id_user,
@@ -77,7 +78,7 @@ class PetugasController extends Controller
             'waktu_aktifitas' => now()
         ]);
 
-        return redirect()->route('petugas.dashboard')->with('success', 'Pelanggan Berhasil Ditambahkan');
+        return redirect()->route('petugas.struk', $tb_transaksi->id_parkir);
     }
 
 

@@ -96,6 +96,31 @@ label {
     transform: scale(1.02);
 }
 
+.bubble{
+    display: block;
+    /* width: 100%; */
+    /* padding: 14px; */
+    /* border-radius: 14px; */
+    background-color: var(--neutral-900);
+}
+
+.bubble .bubble-header{
+    display: block;
+    width: 100%;
+    background-color: var(--primary-400);
+    color: var(--neutral-900);
+    padding: 8px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.bubble .bubble-content{
+    display: block;
+    width: 100%;
+    padding: 4px 8px;
+    border-radius: 0px 0px 10px 10px;
+    background-color: var(--primary-100);
+}
+
 @media screen and (min-width:0px) and (max-width: 500px) {
     .navbar .input-text {
         color: var(--neutral-900);

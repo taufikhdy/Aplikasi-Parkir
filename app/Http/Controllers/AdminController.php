@@ -6,9 +6,11 @@ use App\Models\AreaParkir;
 use App\Models\LogAktifitas;
 use App\Models\Tarif;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class AdminController extends Controller
 {
@@ -16,8 +18,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        $logs = LogAktifitas::latest()->take(10)->get();
         $areas = AreaParkir::latest()->get();
-        return view('layouts.index', compact('areas'));
+        return view('layouts.index', compact('areas', 'logs'));
     }
 
     public function form_area()
@@ -136,6 +139,11 @@ class AdminController extends Controller
         return view('layouts.users', compact('users'));
     }
 
+    public function formUser()
+    {
+        return view('layouts.form');
+    }
+
     public function tambahUser(Request $request)
     {
         $request->validate([
@@ -177,12 +185,14 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'User Berhasil Dihapus');
     }
 
-    public function formEditUser($id){
+    public function formEditUser($id)
+    {
         $user = User::findOrFail($id);
         return view('layouts.form', compact('user'));
     }
 
-    public function editUser(Request $request){
+    public function editUser(Request $request)
+    {
         $request->validate([
             'nama_lengkap' => 'string|required',
             'username' => 'string|required',
@@ -201,11 +211,54 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'Data User Berhasil Diubah');
     }
 
+    public function aktifitas()
+    {
+        $logs = LogAktifitas::latest()->get();
+        return view('layouts.aktivitas', compact('logs'));
+    }
 
     public function detailLog($id)
     {
         $logs = LogAktifitas::where('id_user', $id)->latest()->get();
 
         return view('layouts.detailLog', compact('logs'));
+    }
+
+    public function hapusLog()
+    {
+        LogAktifitas::truncate();
+
+        $admin = Auth::user();
+        $admin->log()->create([
+            'aktifitas' => '🗑️ ' . $admin->nama_lengkap . ' Menghapus Seluruh Data Log Aktivitas User',
+            'waktu_aktifitas' => now()
+        ]);
+        return redirect()->route('admin.aktivitas')->with('success', 'Log Aktivitas Berhasil Dibersihkan');
+    }
+
+    public function exportLogPdf(Request $request){
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date'
+        ]);
+
+        $from = Carbon::parse($request->from)->startOfDay();
+        $to = Carbon::parse($request->to)->endOfDay();
+
+        $logs = LogAktifitas::whereBetween('created_at',[
+            $from,
+            $to
+        ])->latest()->get();
+
+
+        $user = Auth::user();
+        $user->log()->create([
+            'aktifitas' => '📥 Mendownload Data Aktivitas User format PDF',
+            'waktu_aktifitas' => now()
+        ]);
+
+        $pdf = Pdf::loadview('pdf.logAktifitas', compact('logs', 'from', 'to'))->setPaper('a4', 'landscape');
+
+        return $pdf->download('Rekap Data Aktivitas Pengguna.pdf');
     }
 }

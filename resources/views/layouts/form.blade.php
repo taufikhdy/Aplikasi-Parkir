@@ -1,12 +1,53 @@
 @extends('main')
 
 
-@if (Request::is('admin/dashboard/form_area'))
+@if (Request::is('admin/users/formTambah'))
+    @section('title', 'area')
+    @section('content')
+        <div class="content {{ Request::is('admin/users/formTambah') ? 'active' : '' }}">
+
+            <h2><a href="{{ url()->previous() }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form Tambah Pengguna </h2>
+
+            <form action="{{ route('admin.tambahUser') }}" method="post" class="mt-20 mb-40">
+                @csrf
+                <div class="flex align-bottom gap-10 flex-wrap cursor-pointer">
+                    <div class="input">
+                        <label for="nama_lengkap">Nama Lengkap</label>
+                        <input type="text" name="nama_lengkap" id="nama_lengkap" class="input-text" required>
+                    </div>
+                    <div class="input">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" class="input-text" required>
+                    </div>
+                    <div class="input">
+                        <label for="password">Password</label>
+                        <input type="text" name="password" id="password" required value="password123"
+                            class="input-text">
+                    </div>
+                    <div class="input">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="input-text">
+                            <option value="admin">Admin</option>
+                            <option value="petugas">Petugas</option>
+                            <option value="owner">Owner</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <input type="submit" name="" id="" class="btn-primary pl-8 pr-8 pt-6 pb-6"
+                            value="Tambah">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    @endsection
+@elseif (Request::is('admin/dashboard/form_area'))
     @section('title', 'area')
     @section('content')
         <div class="content {{ Request::is('admin/dashboard/form_area') ? 'active' : '' }}">
 
-            <h2><a href="{{ url()->previous() }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form Tambah Area
+            <h2><a href="{{ url()->previous() }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form Tambah
+                Area
                 Parkir</h2>
 
             <div class="banner-2 mt-20" id="banner-2">
@@ -140,7 +181,8 @@
                                 <input type="hidden" name="id_tarif" id="" value="{{ $tarif->id_tarif }}">
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $tarif->jenis_kendaraan }}</td>
-                                <td class="w-max">Rp. <input type="number" name="tarif_per_jam" id="" value="{{ $tarif->tarif_per_jam }}" class="input-text w-max" disabled></td>
+                                <td class="w-max">Rp. <input type="number" name="tarif_per_jam" id=""
+                                        value="{{ $tarif->tarif_per_jam }}" class="input-text w-max" disabled></td>
                                 <td>
                                     <input type="submit" name="input-submit" id=""
                                         class="inputSubmit btn-primary pl-8 pr-8 pt-4 pb-4 cursor-pointer" value="Update">
@@ -164,10 +206,10 @@
                 Form Tambah User
             </h2>
 
-            <form action="{{route('admin.editUserPost')}}" method="post" class="mt-20">
+            <form action="{{ route('admin.editUserPost') }}" method="post" class="mt-20">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id_user" id="" value="{{$user->id_user}}">
+                <input type="hidden" name="id_user" id="" value="{{ $user->id_user }}">
                 <div class="flex flex-wrap align-top gap-10">
                     <div class="input">
                         <label for="nama_lengkap">Nama Lengkap</label>
@@ -176,13 +218,13 @@
                     </div>
                     <div class="input">
                         <label for="username">Username</label>
-                        <input type="text" name="username" id="username" class="input-text w-100" placeholder="Username" required
-                            value="{{ $user->username }}">
+                        <input type="text" name="username" id="username" class="input-text w-100"
+                            placeholder="Username" required value="{{ $user->username }}">
                     </div>
                     <div class="input">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="input-text w-100">
-                            <option value="{{$user->role}}">Petugas</option>
+                            <option value="{{ $user->role }}">Petugas</option>
                             <option value="admin">Admin</option>
                             <option value="petugas">Petugas</option>
                             <option value="owner">Owner</option>

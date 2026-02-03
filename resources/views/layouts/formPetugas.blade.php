@@ -108,7 +108,7 @@
                 <div class="input">
                     <label for="waktu_keluar">Waktu Keluar</label>
                     <input type="datetime-local" name="waktu_keluar" id="waktu_keluar" class="input-text w-100"
-                        placeholder="Waktu Keluar">
+                        placeholder="Waktu Keluar" value="{{now()}}">
                 </div>
 
 

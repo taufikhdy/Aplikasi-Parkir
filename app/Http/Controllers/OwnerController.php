@@ -27,15 +27,12 @@ class OwnerController extends Controller
 
         // $grouped = $transaksis->groupBy('waktu_keluar');
 
-        // $total = $grouped->map(function ($items) {
-        //     return $items->sum('biaya_total');
-        // });
 
-        $total = Transaksi::whereNotNull('waktu_keluar')->selectRaw('DATE(waktu_keluar) as tanggal, SUM(biaya_total) as total')->groupBy('tanggal')->orderBy('tanggal')->get();
+        $trans = Transaksi::whereNotNull('waktu_keluar')->selectRaw('DATE(waktu_keluar) as tanggal, SUM(biaya_total) as total')->groupBy('tanggal')->orderBy('tanggal')->get();
 
         return response()->json([
-            'labels' => $total->keys(),
-            'values' => $total->values()
+            'labels' => $trans->pluck('tanggal')->toArray(),
+            'values' => $trans->pluck('total')->toArray()
         ]);
     }
 

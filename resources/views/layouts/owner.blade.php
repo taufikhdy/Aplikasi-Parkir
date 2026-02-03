@@ -15,7 +15,7 @@
 
             <form action="{{ route('owner.excelExport') }}" method="post">
                 @csrf
-                <div class="flex align-center gap-4">
+                <div class="flex flex-end align-center gap-4 flex-wrap">
 
                     <input type="date" name="from" id="" placeholder="From" class="input-text">
                     <input type="date" name="to" placeholder="To" class="input-text">
@@ -25,7 +25,7 @@
             </form>
             <form action="{{ route('owner.pdfExport') }}" method="post">
                 @csrf
-                <div class="flex align-center gap-4">
+                <div class="flex flex-end align-center gap-4 flex-wrap">
 
                     <input type="date" name="from" id="" placeholder="From" class="input-text">
                     <input type="date" name="to" placeholder="To" class="input-text">
