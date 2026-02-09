@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('id_parkir');
             // $table->foreignId('id_kendaraan')->constrained('kendaraan', 'id_kendaraan')->cascadeOnDelete(); ga di pake biar transaksi akhir ga dihapus terus masuk data transaksi buat owner
-            $table->foreignId('id_kendaraan')->constrained('kendaraan', 'id_kendaraan');
+            $table->foreignId('id_kendaraan')->constrained('kendaraan', 'id_kendaraan')->cascadeOnDelete();
             $table->foreignId('id_tarif')->constrained('tarif', 'id_tarif');
             $table->foreignId('id_user')->constrained('users', 'id_user');
             $table->foreignId('id_area')->constrained('area_parkir', 'id_area');

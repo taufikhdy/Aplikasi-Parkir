@@ -7,7 +7,7 @@
         <h1 id="greeting"></h1>
         <br>
         <p><span class="">{{ Auth::User()->nama_lengkap }} </span><br>
-            {{ Auth::User()->role }}
+            {{ Str::ucfirst(Auth::User()->role) }}
         </p>
     </div>
 
@@ -24,22 +24,23 @@
                             class="ri-lg ri-parking-box-line"></i>
                         <br><br>
                         <span class="fs-12">Tambah<br>Area Parkir</span></a>
+                    <a href="{{ route('admin.member') }}" class="coin text-center"><i class="ri-lg ri-group-line"></i>
+                        <br><br> <span class="fs-12">Member</span></a>
                     <a href="{{ route('admin.form_kendaraan') }}" class="vehilce text-center"><i
                             class="ri-lg ri-car-line"></i>
                         <br><br> <span class="fs-12">Jenis<br>Kendaraan</span></a>
-
-                    <a href="{{ route('admin.form_kendaraan') }}" class="coin text-center"><i
-                            class="ri-lg ri-group-line"></i>
-                        <br><br> <span class="fs-12">Member</span></a>
                 @elseif (Auth::user()->role === 'petugas')
-                    <a href="{{ route('petugas.tambahCustomer') }}" class="coin text-center"><i
-                            class="ri-lg ri-user-add-line"></i>
+                    <a href="{{ route('petugas.memberList') }}" class="coin text-center"><i class="ri-lg ri-group-line"></i>
                         <br><br>
-                        <span class="fs-12">Tambah<br>Pelanggan</span></a>
+                        <span class="fs-12">Transaksi<br>Member</span></a>
                     <a href="{{ route('petugas.customerList') }}" class="park text-center"><i
                             class="ri-lg ri-list-check-3"></i>
                         <br><br>
                         <span class="fs-12">Konfirmasi<br>Pelanggan<br>Selesai</span></a>
+                    <a href="{{ route('petugas.tambahCustomer') }}" class="vehilce text-center"><i
+                            class="ri-lg ri-user-add-line"></i>
+                        <br><br>
+                        <span class="fs-12">Tambah<br>Pelanggan</span></a>
                 @elseif (Auth::user()->role === 'owner')
                     <a href="{{ route('owner.dataTransaksi') }}" class="vehilce text-center"><i
                             class="ri-lg ri-export-line"></i>
@@ -54,7 +55,7 @@
 
                 <div class="flex flex-between align-center pt-10 pb-10 mt-20">
                     <h2>Aktivitas Terbaru</h2>
-                    <a href="{{route('admin.aktivitas')}}" class="btn-primary p-6">Lihat Semua</a>
+                    <a href="{{ route('admin.aktivitas') }}" class="btn-primary p-6">Lihat Semua</a>
                 </div>
                 <div class="table-container">
                     <table class="text-center text-nowrap">
@@ -74,8 +75,8 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 {{-- <td>{{ $log->id_user }}</td> --}}
-                                <td class="text-left"><a
-                                        href="{{ route('admin.detail_log', $log->id_user) }}" class="underline">{{ $log->user->nama_lengkap . ' ( ' . $log->user->role . ' )' }}</a>
+                                <td class="text-left"><a href="{{ route('admin.detail_log', $log->id_user) }}"
+                                        class="underline">{{ $log->user->nama_lengkap . ' ( ' . $log->user->role . ' )' }}</a>
                                 </td>
                                 <td class="text-left">{{ $log->aktifitas }}</td>
                                 <td>{{ $log->waktu_aktifitas }}</td>

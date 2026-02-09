@@ -36,6 +36,10 @@
         .text-right {
             text-align: right;
         }
+
+        .text-left{
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -59,7 +63,7 @@
             <tr>
                 <td>{{ $no++ }}</td>
                 <td>{{ $i->user->nama_lengkap }}</td>
-                <td>{{ $i->aktifitas }}</td>
+                <td class="text-left">{{ $i->aktifitas }}</td>
                 <td>{{ $i->waktu_aktifitas }}</td>
             </tr>
         @endforeach

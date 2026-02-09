@@ -6,7 +6,8 @@
     @section('content')
         <div class="content {{ Request::is('admin/users/formTambah') ? 'active' : '' }}">
 
-            <h2><a href="{{ url()->previous() }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form Tambah Pengguna </h2>
+            <h2><a href="{{ url()->previous() }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form Tambah
+                Pengguna </h2>
 
             <form action="{{ route('admin.tambahUser') }}" method="post" class="mt-20 mb-40">
                 @csrf
@@ -33,7 +34,7 @@
                         </select>
                     </div>
                     <div class="input">
-                        <input type="submit" name="" id="" class="btn-primary pl-8 pr-8 pt-6 pb-6"
+                        <input type="submit" name="" id="" class="input-submit"
                             value="Tambah">
                     </div>
                 </div>
@@ -60,7 +61,7 @@
                 <div class="flex flex-wrap align-top gap-10">
                     <div class="input">
                         <label for="nama_area">Nama Area</label>
-                        <input type="text" name="nama_area" id="nama_area" class="input-text" placeholder="Nama Area">
+                        <input type="text" name="nama_area" id="nama_area" class="input-text" placeholder="Nama Area" required>
                     </div>
                     <div class="input">
                         <label for="warna_label">Warna Label</label>
@@ -73,7 +74,7 @@
                     <div class="input">
                         <label for="kapasitas">Kapasitas Area</label>
                         <input type="number" name="kapasitas" id="kapasitas" class="input-text w-100"
-                            placeholder="Kapasitas Area">
+                            placeholder="Kapasitas Area" required>
                     </div>
                 </div>
 
@@ -224,7 +225,7 @@
                     <div class="input">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="input-text w-100">
-                            <option value="{{ $user->role }}">Petugas</option>
+                            <option value="{{ $user->role }}">{{$user->role}}</option>
                             <option value="admin">Admin</option>
                             <option value="petugas">Petugas</option>
                             <option value="owner">Owner</option>
@@ -233,6 +234,104 @@
                 </div>
 
                 <input type="submit" name="" id="" class="input-submit" value="Edit User">
+            </form>
+
+        </div>
+    @endsection
+@elseif (Request::is('admin/dashboard/memberForm'))
+    @section('title', 'area')
+    @section('content')
+        <div class="content {{ Request::is('admin/dashboard/memberForm') ? 'active' : '' }}">
+
+            <h2><a href="{{ route('admin.member') }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form
+                Tambah Member</h2>
+
+            <div class="banner-2 mt-20" id="banner-2">
+                <h2 id="label_area"></h2>
+            </div>
+
+            <form action="{{ route('admin.memberPost') }}" method="post" class="mt-20">
+                @csrf
+                <input type="hidden" name="id_user" id="" value="{{ Auth::user()->id_user }}">
+                <div class="flex align-center gap-10">
+                    <div class="input">
+                        <label for="nama_area">Plat Nomor</label>
+                        <input type="text" name="plat_nomor" id="nama_area" class="input-text w-100"
+                            placeholder="Plat Nomor Kendaraan" required>
+                    </div>
+                    <div class="input">
+                        <label for="pemilik">Pemilik Kendaraan</label>
+                        <input type="text" name="pemilik" id="pemilik" class="input-text w-100"
+                            placeholder="Pemilik Kendaraan" required>
+                    </div>
+                </div>
+                <div class="flex align-top gap-10">
+                    <div class="input">
+                        <label for="jenis_kendaraan">Jenis Kendaraan</label>
+                        <select name="jenis_kendaraan" id="jenis_kendaraan" class="input-text" required>
+                            <option value="motor">Motor</option>
+                            <option value="mobil">Mobil</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <label for="warna_label">Warna Kendaraan</label>
+                        <input type="color" name="warna_kendaraan" id="warna_label" class="w-100"
+                            placeholder="Warna Label" required>
+                    </div>
+                </div>
+
+                <input type="submit" name="" id="" class="input-submit" value="Tambah Pelanggan">
+            </form>
+
+        </div>
+    @endsection
+@elseif (Request::is('admin/dashboard/member/edit*'))
+    @section('title', 'area')
+    @section('content')
+        <div class="content {{ Request::is('admin/dashboard/member/edit*') ? 'active' : '' }}">
+
+            <h2><a href="{{ route('admin.member') }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Form
+                Edit Member</h2>
+
+            <div class="banner-2 mt-20" id="banner-2" style="background: {{ $member->warna }}">
+                <h2 id="label_area">{{ $member->plat_nomor }}</h2>
+            </div>
+
+            <form action="{{ route('admin.memberEditPost') }}" method="post" class="mt-20">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id_kendaraan" id="" value="{{ $member->id_kendaraan }}">
+                <div class="flex align-center gap-10">
+                    <div class="input">
+                        <label for="nama_area">Plat Nomor</label>
+                        <input type="text" name="plat_nomor" id="nama_area" class="input-text w-100"
+                            placeholder="Plat Nomor Kendaraan" value="{{ $member->plat_nomor }}" required>
+                    </div>
+                    <div class="input">
+                        <label for="pemilik">Pemilik Kendaraan</label>
+                        <input type="text" name="pemilik" id="pemilik" class="input-text w-100"
+                            placeholder="Pemilik Kendaraan" value="{{ $member->pemilik }}" required>
+                    </div>
+                </div>
+                <div class="flex align-top gap-10">
+                    <div class="input">
+                        <label for="jenis_kendaraan">Jenis Kendaraan</label>
+                        <select name="jenis_kendaraan" id="jenis_kendaraan" class="input-text" required>
+                            <option value="{{ $member->jenis_kendaraan }}">{{ $member->jenis_kendaraan }}</option>
+                            <option value="motor">Motor</option>
+                            <option value="mobil">Mobil</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="input">
+                        <label for="warna_label">Warna Kendaraan</label>
+                        <input type="color" name="warna_kendaraan" id="warna_label" class="w-100"
+                            placeholder="Warna Label" value="{{ $member->warna }}" required>
+                    </div>
+                </div>
+
+                <input type="submit" name="" id="" class="input-submit" value="Edit Member">
             </form>
 
         </div>

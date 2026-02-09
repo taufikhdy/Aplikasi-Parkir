@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\KendaraanImport;
 use App\Models\AreaParkir;
+use App\Models\Kendaraan;
 use App\Models\LogAktifitas;
 use App\Models\Tarif;
 use App\Models\User;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -25,18 +28,18 @@ class AdminController extends Controller
 
     public function form_area()
     {
-        return view('layouts.form');
+        return view('layouts.admin.form');
     }
 
     public function form_kendaraan()
     {
-        return view('layouts.form');
+        return view('layouts.admin.form');
     }
 
     public function tarif()
     {
         $tarifs = Tarif::get();
-        return view('layouts.form', compact('tarifs'));
+        return view('layouts.admin.form', compact('tarifs'));
     }
 
     public function editTarif(Request $request)
@@ -136,12 +139,12 @@ class AdminController extends Controller
     {
         $users = User::latest()->get();
 
-        return view('layouts.users', compact('users'));
+        return view('layouts.admin.users', compact('users'));
     }
 
     public function formUser()
     {
-        return view('layouts.form');
+        return view('layouts.admin.form');
     }
 
     public function tambahUser(Request $request)
@@ -188,7 +191,7 @@ class AdminController extends Controller
     public function formEditUser($id)
     {
         $user = User::findOrFail($id);
-        return view('layouts.form', compact('user'));
+        return view('layouts.admin.form', compact('user'));
     }
 
     public function editUser(Request $request)
@@ -214,14 +217,14 @@ class AdminController extends Controller
     public function aktifitas()
     {
         $logs = LogAktifitas::latest()->get();
-        return view('layouts.aktivitas', compact('logs'));
+        return view('layouts.admin.aktivitas', compact('logs'));
     }
 
     public function detailLog($id)
     {
         $logs = LogAktifitas::where('id_user', $id)->latest()->get();
 
-        return view('layouts.detailLog', compact('logs'));
+        return view('layouts.admin.detailLog', compact('logs'));
     }
 
     public function hapusLog()
@@ -236,7 +239,8 @@ class AdminController extends Controller
         return redirect()->route('admin.aktivitas')->with('success', 'Log Aktivitas Berhasil Dibersihkan');
     }
 
-    public function exportLogPdf(Request $request){
+    public function exportLogPdf(Request $request)
+    {
         $request->validate([
             'from' => 'required|date',
             'to' => 'required|date'
@@ -245,7 +249,7 @@ class AdminController extends Controller
         $from = Carbon::parse($request->from)->startOfDay();
         $to = Carbon::parse($request->to)->endOfDay();
 
-        $logs = LogAktifitas::whereBetween('created_at',[
+        $logs = LogAktifitas::whereBetween('created_at', [
             $from,
             $to
         ])->latest()->get();
@@ -260,5 +264,126 @@ class AdminController extends Controller
         $pdf = Pdf::loadview('pdf.logAktifitas', compact('logs', 'from', 'to'))->setPaper('a4', 'landscape');
 
         return $pdf->download('Rekap Data Aktivitas Pengguna.pdf');
+    }
+
+    public function member()
+    {
+        $kendaraan = Kendaraan::latest()->get();
+        return view('layouts.member', compact('kendaraan'));
+    }
+
+    public function memberForm()
+    {
+        return view('layouts.admin.form');
+    }
+
+    public function memberFormPost(Request $request)
+    {
+        $request->validate([
+            'id_user' => 'required|exists:users,id_user',
+            'plat_nomor' => 'required|string',
+            'pemilik' => 'required|string',
+            'jenis_kendaraan' => 'required|string',
+            'warna_kendaraan' => 'required|string'
+        ]);
+
+        Kendaraan::create([
+            'plat_nomor' => $request->plat_nomor,
+            'pemilik' => $request->pemilik,
+            'jenis_kendaraan' => $request->jenis_kendaraan,
+            'warna' => $request->warna_kendaraan,
+            'id_user' => $request->id_user
+        ]);
+
+        $user = Auth::user();
+        $user->log()->create([
+            'aktifitas' => '👑 Menambah Member ' . $request->jenis_kendaraan . ' Plat Nomor : ' . $request->plat_nomor,
+            'waktu_aktifitas' => now()
+        ]);
+
+        return redirect()->route('admin.member');
+    }
+
+    public function memberFormEdit($id)
+    {
+        $member = Kendaraan::findOrFail($id);
+
+        return view('layouts.admin.form', compact('member'));
+    }
+
+    public function memberEditPost(Request $request)
+    {
+        $request->validate([
+            'plat_nomor' => 'required',
+            'jenis_kendaraan' => 'required',
+            'warna_kendaraan' => 'required',
+            'pemilik' => 'required'
+        ]);
+
+        $member = Kendaraan::findOrFail($request->id_kendaraan);
+        $member->update([
+            'plat_nomor' => $request->plat_nomor,
+            'jenis_kendaraan' => $request->jenis_kendaraan,
+            'warna' => $request->warna_kendaraan,
+            'pemilik' => $request->pemilik
+        ]);
+        // $member->update($request->all());
+
+        $admin = Auth::user();
+        $admin->log()->create([
+            'aktifitas' => '✏️ Mengubah Data Member ' . $member->pemilik . ' (' . $member->plat_nomor . ')',
+            'waktu_aktifitas' => now()
+        ]);
+
+        return redirect()->route('admin.member')->with('success', 'Data Member Berhasil Diubah');
+    }
+
+    public function memberHapus(Request $request)
+    {
+        $member = Kendaraan::findOrFail($request->id_kendaraan);
+        $member->delete();
+
+        $admin = Auth::user();
+        $admin->log()->create([
+            'aktifitas' => '🗑️ Menghapus Data Member ' . $member->pemilik . ' (' . $member->plat_nomor . ')',
+            'waktu_aktifitas' => now()
+        ]);
+
+        return redirect()->route('admin.member');
+    }
+
+    public function memberHapusAll()
+    {
+        Kendaraan::query()->delete();
+
+        $admin = Auth::user();
+        $admin->log()->create([
+            'aktifitas' => '🗑️ ' . $admin->nama_lengkap . ' Menghapus Seluruh Data Member',
+            'waktu_aktifitas' => now()
+        ]);
+
+        return redirect()->route('admin.member')->with('success', 'Seluruh Data Member Berhasil dihapus');
+    }
+
+    public function importMember(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(
+            new KendaraanImport(
+                Auth::user()->id_user
+            ),
+            $request->file('file')
+        );
+
+        $admin = Auth::user();
+        $admin->log()->create([
+            'aktifitas' => '📚 Mengimpor Data Member ',
+            'waktu_aktifitas' => now()
+        ]);
+
+        return redirect()->route('admin.member');
     }
 }

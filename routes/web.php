@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PetugasController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+
 
 Route::middleware('guest')->group(function () {
     Route::controller(AuthController::class)->group(function () {
@@ -45,6 +48,16 @@ Route::middleware(['auth', 'multirole:admin'])->group(function () {
         Route::get('/admin/log_aktifitas/detail/{id}', 'detailLog')->name('admin.detail_log');
         Route::post('/admin/log_aktifitas/hapus', 'hapusLog')->name('admin.hapusLog');
         Route::post('/admin/log_aktifitas/exportPdf', 'exportLogPdf')->name('admin.exportLog');
+
+        Route::get('/admin/dashboard/member', 'member')->name('admin.member');
+        Route::get('/admin/dashboard/memberForm', 'memberForm')->name('admin.memberForm');
+        Route::post('/admin/dashboard/member/memberPost', 'memberFormPost')->name('admin.memberPost');
+        Route::get('/admin/dashboard/member/edit/{id}', 'memberFormEdit')->name('admin.memberEdit');
+        Route::put('/admin/dashboard/member/edit/memberEditPost', 'memberEditPost')->name('admin.memberEditPost');
+        Route::delete('/admin/dashboard/member/hapus', 'memberHapus')->name('admin.memberHapus');
+        Route::delete('/admin/dashboard/member/hapusAll', 'memberHapusAll')->name('admin.memberHapusAll');
+
+        Route::post('/admin/dashboard/member/importMember', 'importMember')->name('admin.importMember');
     });
 });
 
@@ -57,10 +70,16 @@ Route::middleware(['auth', 'multirole:petugas'])->group(function () {
         Route::get('/petugas/dashboard/customer/tambah', 'tambahCustomer')->name('petugas.tambahCustomer');
         Route::post('/petugas/dashboard/customer/tambah/post', 'tambahCustomerPost')->name('petugas.tambahCustomer.post');
 
+        Route::get('/petugas/dashboard/member/transaksiMasuk/{id}', 'tambahTransaksi')->name('petugas.tambahTransaksi');
+        Route::post('/petugas/dashboard/member/transaksiMasuk/post', 'tambahTransaksiPost')->name('petugas.tambahTransaksi.post');
+
         Route::get('/petugas/dashboard/customers/list', 'customerList')->name('petugas.customerList');
         Route::get('/petugas/dashboard/customers/list/selesai/{id}', 'pelangganFormSelesai')->name('petugas.customerSelesai');
         Route::post('/petugas/dashboard/customers/post', 'pelangganSelesaiPost')->name('petugas.pelangganSelesaiPost');
+
         Route::get('/petugas/dashboard/customer/struk/{id}', 'struk')->name('petugas.struk');
+
+        Route::get('/petugas/dashboard/member/list', 'memberList')->name('petugas.memberList');
     });
 });
 
@@ -74,4 +93,14 @@ Route::middleware(['auth', 'multirole:owner'])->group(function () {
         Route::post('/owner/dashboard/data_transaksi/PDFXPOR', 'pdfExport')->name('owner.pdfExport');
         Route::post('/owner/dashboard/data_transaksi/EXCXPOR', 'excelExport')->name('owner.excelExport');
     });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::controller(GeneralController::class)->group(function () {
+        Route::get('/app/passkey', 'ubahPassword')->name('ubahPassword');
+        Route::post('/app/passkey/keyUpdate', 'newPassPost')->name('newPassPost');
+    });
+});
+
+Route::controller(GeneralController::class)->group(function () {
 });

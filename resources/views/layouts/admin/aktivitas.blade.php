@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="content active">
-        <div class="flex flex-between align-center pb-10">
+        <div class="flex flex-between flex-wrap align-center pb-10">
             <h2>Aktivitas Terbaru</h2>
 
             <div class="flex flex-end align-center gap-10 mt-10 flex-wrap">
@@ -20,7 +20,7 @@
                 </form>
                 <form action="{{ route('admin.hapusLog') }}" method="post">
                     @csrf
-                    <button type="submit" class="btn-error p-6">Hapus Semua Log</button>
+                    <button type="submit" class="btn-error p-6">Hapus Semua</button>
                 </form>
             </div>
         </div>

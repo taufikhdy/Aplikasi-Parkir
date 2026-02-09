@@ -21,4 +21,10 @@ class Kendaraan extends Model
     {
         return $this->hasMany(Transaksi::class, 'id_kendaraan');
     }
+
+    public function transaksiTerakhir()
+    {
+        return $this->hasOne(Transaksi::class, 'id_kendaraan')
+            ->latestOfMany('id_kendaraan');
+    }
 }

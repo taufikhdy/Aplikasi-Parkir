@@ -1458,6 +1458,17 @@ a {
     font-size: 14px;
 }
 
+input[type='file']::file-selector-button{
+    color: var(--neutral-900);
+    background-color: var(--primary-600);
+    font-weight: 600;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    font-family: 'nunito sans';
+    padding: 6px;
+}
+
 .btn-error {
     display: inline-block;
     color: var(--neutral-900);
@@ -1703,8 +1714,14 @@ tr:hover {
 }
 
 @media screen and (min-width:0px) and (max-width: 500px) {
+
     body {
         background-color: var(--primary-700);
+        font-size: .9rem;
+    }
+
+    h2{
+        font-size: 1.2rem;
     }
 
     .grid-col-4,

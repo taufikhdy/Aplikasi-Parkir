@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kendaraan', function (Blueprint $table) {
             $table->id('id_kendaraan');
-            $table->string('plat_nomor');
+            $table->string('plat_nomor')->unique();
             $table->enum('jenis_kendaraan', ['motor', 'mobil', 'lainnya']);
             $table->string('warna');
             $table->string('pemilik')->nullable();

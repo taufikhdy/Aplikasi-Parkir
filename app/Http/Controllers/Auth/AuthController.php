@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\LogAktifitas;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -59,6 +60,7 @@ class AuthController extends Controller
 
         $user->status_aktif = 0;
         $user->save();
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

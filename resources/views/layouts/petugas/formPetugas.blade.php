@@ -19,13 +19,13 @@
                 <div class="flex align-center gap-10">
                     <div class="input">
                         <label for="nama_area">Plat Nomor</label>
-                        <input type="text" name="plat_nomor" id="nama_area" class="input-text"
+                        <input type="text" name="plat_nomor" id="nama_area" class="input-text w-100"
                             placeholder="Plat Nomor Kendaraan" required>
                     </div>
                     <div class="input">
                         <label for="pemilik">Pemilik Kendaraan</label>
-                        <input type="text" name="pemilik" id="pemilik" class="input-text"
-                            placeholder="Pemilik Kendaraan">
+                        <input type="text" name="pemilik" id="pemilik" class="input-text w-100"
+                            placeholder="Pemilik Kendaraan" required>
                     </div>
                 </div>
                 <div class="flex align-top gap-10">
@@ -46,15 +46,15 @@
                 <div class="flex align-center gap-10">
                     <div class="input">
                         <label for="waktu">Waktu Masuk</label>
-                        <input type="datetime-local" name="waktu_masuk" id="waktu" class="input-text w-100"
-                            placeholder="Waktu Masuk">
+                        <input type="datetime-local" name="waktu_masuk" id="waktu" class="input-text"
+                            placeholder="Waktu Masuk" required value="{{ now() }}">
                     </div>
                     <div class="input">
                         <label for="area">Area Parkir</label>
-                        <select name="id_area" id="area" class="input-text" required>
+                        <select name="id_area" id="area" class="input-text w-100" required>
                             @foreach ($areas as $area)
-                                <option value="{{ $area->id_area }}">{{ $area->nama_area }} ( sisa
-                                    {{ $area->kapasitas - $area->terisi }} slot )</option>
+                                <option value="{{ $area->id_area }}">{{ $area->nama_area }}
+                                    {{ $area->terisi . '/' . $area->kapasitas }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -65,12 +65,77 @@
 
         </div>
     @endsection
+@elseif (Request::is('petugas/dashboard/member/transaksiMasuk*'))
+    @section('title', 'area')
+    @section('content')
+        <div class="content {{ Request::is('petugas/dashboard/member/transaksiMasuk*') ? 'active' : '' }}">
+
+            <h2><a href="{{ route('petugas.dashboard') }}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a>
+                Form
+                Tambah
+                Transaksi Masuk</h2>
+
+            <div class="banner-2 mt-20" id="banner-2" style="background: {{ $kendaraan->warna }}">
+                <h2 id="label_area">{{ $kendaraan->plat_nomor }}</h2>
+            </div>
+
+            <form action="{{route('petugas.tambahTransaksi.post')}}" method="post" class="mt-20">
+                @csrf
+                <input type="hidden" name="id_user" id="" value="{{ Auth::user()->id_user }}">
+                <input type="hidden" name="id_kendaraan" id="" value="{{ $kendaraan->id_kendaraan }}">
+                <div class="flex align-center gap-10">
+                    <div class="input">
+                        <label for="nama_area">Plat Nomor</label>
+                        <input type="text" name="plat_nomor" id="nama_area" class="input-text w-100"
+                            value="{{ $kendaraan->plat_nomor }}" placeholder="Plat Nomor Kendaraan" required readonly>
+                    </div>
+                    <div class="input">
+                        <label for="pemilik">Pemilik Kendaraan</label>
+                        <input type="text" name="pemilik" id="pemilik" class="input-text w-100"
+                            value="{{ $kendaraan->pemilik }}" placeholder="Pemilik Kendaraan" required readonly>
+                    </div>
+                </div>
+                <div class="flex align-top gap-10">
+                    <div class="input">
+                        <label for="jenis_kendaraan">Jenis Kendaraan</label>
+                        <input type="text" name="jenis_kendaraan" id="jenis_kendaraan" class="input-text w-100"
+                            value="{{ $kendaraan->jenis_kendaraan }}" placeholder="Jenis Kendaraan Kendaraan" readonly>
+                    </div>
+                    <div class="input">
+                        <label for="warna_label">Warna Kendaraan</label>
+                        <input type="color" name="warna_kendaraan" id="warna_label" class="w-100"
+                            value="{{ $kendaraan->warna }}" placeholder="Warna Label" required disabled>
+                    </div>
+                </div>
+                <div class="flex align-center gap-10">
+                    <div class="input">
+                        <label for="waktu">Waktu Masuk</label>
+                        <input type="datetime-local" name="waktu_masuk" id="waktu" class="input-text"
+                            value="{{ now() }}" placeholder="Waktu Masuk" readonly>
+                    </div>
+                    <div class="input">
+                        <label for="area">Area Parkir</label>
+                        <select name="id_area" id="area" class="input-text w-100" required>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->id_area }}">{{ $area->nama_area }}
+                                    {{ $area->terisi . '/' . $area->kapasitas }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <input type="submit" name="" id="" class="input-submit" value="Tambah Transaksi">
+            </form>
+
+        </div>
+    @endsection
 @elseif (Request::is('petugas/dashboard/customers/list/selesai*'))
     @section('title', 'area')
     @section('content')
         <div class="content {{ Request::is('petugas/dashboard/customers/list/selesai*') ? 'active' : '' }}">
 
-            <h2><a href="{{ url()->previous() }}}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a> Konfirmasi
+            <h2><a href="{{ url()->previous() }}}" class="mr-10"><i class="ri-arrow-left-long-line"></i></a>
+                Konfirmasi
                 Pelanggan Selesai</h2>
 
             <div class="banner-2 mt-20" id="banner-2" style="background: {{ $transaksi->kendaraan->warna }}">
@@ -108,7 +173,7 @@
                 <div class="input">
                     <label for="waktu_keluar">Waktu Keluar</label>
                     <input type="datetime-local" name="waktu_keluar" id="waktu_keluar" class="input-text w-100"
-                        placeholder="Waktu Keluar" value="{{now()}}">
+                        placeholder="Waktu Keluar" value="{{ now() }}">
                 </div>
 
 
